@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>docker安装流程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#下载安装docker for docker地址：http://www.docker.com #配置阿里云加速 #常用命令docker images 打印本地所有镜像docker run -p 8080:80 -d daocloud.io.ngix    &amp;ensp;-p 本地端口:服务器端口  端口映射    &amp;ensp;-d 直接返回 服务作为守护进程运行docker cp index.htm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker安装流程">
+<meta property="og:url" content="http://yoursite.com/2018/11/25/docker/docker学习/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#下载安装docker for docker地址：http://www.docker.com #配置阿里云加速 #常用命令docker images 打印本地所有镜像docker run -p 8080:80 -d daocloud.io.ngix    &amp;ensp;-p 本地端口:服务器端口  端口映射    &amp;ensp;-d 直接返回 服务作为守护进程运行docker cp index.htm">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-29T14:18:25.899Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker安装流程">
+<meta name="twitter:description" content="#下载安装docker for docker地址：http://www.docker.com #配置阿里云加速 #常用命令docker images 打印本地所有镜像docker run -p 8080:80 -d daocloud.io.ngix    &amp;ensp;-p 本地端口:服务器端口  端口映射    &amp;ensp;-d 直接返回 服务作为守护进程运行docker cp index.htm">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-docker/docker学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/25/docker/docker学习/" class="article-date">
+  <time datetime="2018-11-25T05:23:00.000Z" itemprop="datePublished">2018-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker安装流程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#下载安装docker for docker<br>地址：<a href="http://www.docker.com" target="_blank" rel="noopener">http://www.docker.com</a></p>
+<p>#配置阿里云加速</p>
+<p>#常用命令<br>docker images 打印本地所有镜像<br>docker run -p 8080:80 -d daocloud.io.ngix<br>    &ensp;-p 本地端口:服务器端口  端口映射<br>    &ensp;-d 直接返回 服务作为守护进程运行<br>docker cp index.html dockeID://路径  拷贝文件到指定容器<br>docker stop dockerID 停止容器服务<br>docker commit -m ‘fun’ dockerID 新镜像名称<br>docker rmi 镜像ID  删除镜像<br>docker rm 容器ID  删除容器<br>docker ps 当前运行的容器 -a列出所有容器运行中跟停止的<br>docker pull 获取image<br>docker build 创建image<br>docker exec -it nginx /bin/base 进入容器 ctrl+d退出<br>docker inspect nginx 检查打印容器信息<br>docker search nginx 搜索镜像<br>docker pull nginx 下载镜像<br>docker push my/nginx 上传镜像<br>docker login  //登录</p>
+<p>#通过dockerfile创建镜像<br>vi mydockerfile<br>FROM ubuntu  //基础镜像<br>MAINTAINER pcaz //镜像作者<br>RUN sed i ‘s/archive.ubuntu.com/mirrors.ustc.edu.cn/g’ ‘etc/apt/sources.list’//使用国内加速镜像仓库<br>RUN apt-get update //更新ubuntu<br>RUN apt-get install -y nginx //安装ngix -y：不要询问<br>COPY index.html /var/www/html<br>ENTRYPOINT [“/usr/sbin/ngix”,”-g”,”daemon off;”]//将nginx作为前台执行而不是守护进程执行 字符串数组会自动空格隔开运行<br>EXPOSE 80//暴露80端口<br>docker build -t 文件名 . //最后点表示当前目录作为上下文</p>
+<p>FROM //base image<br>RUN //执行命令<br>ADD //添加文件<br>COPY //拷贝文件<br>CMD //执行命令<br>EXPOSE //暴露端口<br>WORKDIR //指定路径<br>MAINTAINER //维护者作者<br>ENV //设定环境<br>ENTRYPOINT //容器入口 优先于CMD 并存时优先执行<br>USER //指定用户<br>VOLUME //指定挂载的卷</p>
+<p>#容器特点<br>分层 用dockerfile创建的每行命令都会产生一个id 相同id共享避免镜像过大<br>Volume 提供独立于容器之外的持久化存储共享<br>docker run -p 80:80 -d -v $PWD/html:/usr/share/nginx/html nginx<br>-v 挂载 $PWD/html当前目录html文件挂载到容器/usr/share/nginx/html</p>
+<p>#多容器docker-compose<br>多容器协作（application+service+DB）<br>yml编排<br>~ghost博客~</p>
+<p>#docker 安装mysql<br>.在虚拟机的centos 中安装 docker 的mysql 镜像</p>
+<p>docker run –name mysql01 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest<br>2 .在虚拟机外面通过客户端访问docker安装的mysql ，连接失败</p>
+<p>（1）进入镜像中的mysql（ti 后面的字符串是mysql镜像ID）</p>
+<p>docker exec -ti 2f5ee2707629 /bin/bash<br>（2）登录mysql</p>
+<p>mysql -u root -p 123456<br>（3）修改root 可以通过任何客户端连接</p>
+<p>ALTER USER ‘root‘@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456’;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/25/docker/docker学习/" data-id="cjub6dvve0003acumddhi0vzy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/25/docker/Hadoop简介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hadoop
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/26/docker/HBase简介/">HBase</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/26/docker/Spark简介/">Spark简介</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/25/docker/Hadoop简介/">Hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/25/docker/docker学习/">docker安装流程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

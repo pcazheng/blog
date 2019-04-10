@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hadoop | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="大数据、原理与机制开源的大数据框架、分布式计算解决方案HDFS（分布式文件系统）+MapReduce（分布式计算） #HDFSHDFS =&amp;gt;数据块 &amp;amp; NameNode &amp;amp; DataNode ##数据块数据块是抽象块而非真个文件作为存储单元，默认大小为64MB，一般设置为128MB，备份x3 ##NameNode管理文件系统的命名空间，存放文件元数据 尾货着文件系统的所有文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop">
+<meta property="og:url" content="http://yoursite.com/2018/11/25/docker/Hadoop简介/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大数据、原理与机制开源的大数据框架、分布式计算解决方案HDFS（分布式文件系统）+MapReduce（分布式计算） #HDFSHDFS =&amp;gt;数据块 &amp;amp; NameNode &amp;amp; DataNode ##数据块数据块是抽象块而非真个文件作为存储单元，默认大小为64MB，一般设置为128MB，备份x3 ##NameNode管理文件系统的命名空间，存放文件元数据 尾货着文件系统的所有文件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/11/25/docker/Hadoop简介/~/无标题.png">
+<meta property="og:updated_time" content="2018-11-25T16:05:22.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop">
+<meta name="twitter:description" content="大数据、原理与机制开源的大数据框架、分布式计算解决方案HDFS（分布式文件系统）+MapReduce（分布式计算） #HDFSHDFS =&amp;gt;数据块 &amp;amp; NameNode &amp;amp; DataNode ##数据块数据块是抽象块而非真个文件作为存储单元，默认大小为64MB，一般设置为128MB，备份x3 ##NameNode管理文件系统的命名空间，存放文件元数据 尾货着文件系统的所有文件">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/25/docker/Hadoop简介/~/无标题.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-docker/Hadoop简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/25/docker/Hadoop简介/" class="article-date">
+  <time datetime="2018-11-25T07:15:00.000Z" itemprop="datePublished">2018-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hadoop
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大数据、原理与机制<br>开源的大数据框架、分布式计算解决方案<br>HDFS（分布式文件系统）+MapReduce（分布式计算）</p>
+<p>#HDFS<br>HDFS =&gt;数据块 &amp; NameNode &amp; DataNode</p>
+<p>##数据块<br>数据块是抽象块而非真个文件作为存储单元，默认大小为64MB，一般设置为128MB，备份x3</p>
+<p>##NameNode<br>管理文件系统的命名空间，存放文件元数据 尾货着文件系统的所有文件和目录，文件与数据库的映射 记录每个文件中各个块所在数据节点的信息（主）</p>
+<p>##DataNode<br>存储病建设数据块 向NameNode更新所存储块的列表<br>优点 适合大文件存储，支持TB、PB的数据存储，并有副本策略 可以构建在廉价的机器上，并有一定的容错和恢复机制 可以支持流式数据访问，一次写入，多次读取最高效<br>缺点 不适合大量小文件存储 不适合并发写入，不支持文件随机修改 不支持随机读等低延时的访问方式<br>主节点+备用节点 避免单点NamNode挂掉无法响应问题–</p>
+<p>#MapReduct<br>编程模型，是一种编程方法，是抽象理论<br>输入一个大文件，通过split之后，将其分为多个分片<br>每个文件分片由单独的机器去处理，这就是Map方法<br>将各个机器计算的结果进行汇总并得到最终的结果，这就是Reduce方法<br>Map+Reduce=&gt;Stream+Collect<br>自定义Map方法和Reduce 对HDFS里面的数据进行处理输出</p>
+<p>##YARN 资源管理器</p>
+<p>###ResourceManager<br>分配和调度资源 启动并监控Application 监控NodeManager</p>
+<p>###ApplicationMaster<br>为MR类型的程序申请资源，并分配给内部任务 负责数据的切分 监控任务的执行及容错</p>
+<p>###NodeManager<br>管理单个节点的资源 处理来自ResourceManager的命令 处理来自ApplicationMaster的命令</p>
+<p><img src="~/无标题.png" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/25/docker/Hadoop简介/" data-id="cjub6dvva0001acumafqe4rfr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/26/docker/Spark简介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spark简介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/25/docker/docker学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">docker安装流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/26/docker/HBase简介/">HBase</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/26/docker/Spark简介/">Spark简介</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/25/docker/Hadoop简介/">Hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/25/docker/docker学习/">docker安装流程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
